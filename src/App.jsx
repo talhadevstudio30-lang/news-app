@@ -33,7 +33,9 @@ export default function App() {
   setLoading(true);
   setError(null);
 
-  const apiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
+ const apiKey = import.meta.env.VITE_NEWS_API_KEY;
+console.log("API Key:", apiKey); // Add this to check if it's defined
+
 
   const url =
     category === "general" && query.trim()
