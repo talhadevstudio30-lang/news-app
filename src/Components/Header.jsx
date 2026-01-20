@@ -74,7 +74,7 @@ const PoliticsIcon = () => (
     </svg>
 );
 
-function Header({ setQuery, Search, Moon, setCategory, category, query, Search_Btn }) {
+function Header({ setQuery, setCategory, category, query, Search_Btn }) {
 
     // Function to get categories data
     const getCategories = () => {

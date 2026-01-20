@@ -39,15 +39,15 @@ function SelectedArticle({ selectedArticle, onClose, formatDate, }) {
                                             {selectedArticle.source?.name || 'Unknown Source'}
                                         </span>
                                         <span className="text-gray-600 flex justify-center items-center sm:text-md md:text-[18px]">
-                                          <div className='h-1.5 md:h-2 md:w-2 w-1.5 bg-gray-500 rounded-full mr-2 border-2 border-gray-500'></div>  {formatDate(selectedArticle.publishedAt)}
+                                            <div className='h-1.5 md:h-2 md:w-2 w-1.5 bg-gray-500 rounded-full mr-2 border-2 border-gray-500'></div>  {formatDate(selectedArticle.publishedAt)}
                                         </span>
                                     </div>
                                     <h2 className="text-2xl md:text-3xl font-bold mb-2">{selectedArticle.title}</h2>
-                                        {selectedArticle.author && (
-                                            <span className="text-gray-800 font-semibold sm:text-md md:text-[18px]">
-                                                <span className='text-gray-700 font-normal mr-1'>By</span>{selectedArticle.author}
-                                            </span>
-                                        )}
+                                    {selectedArticle.author && (
+                                        <span className="text-gray-800 font-semibold sm:text-md md:text-[18px]">
+                                            <span className='text-gray-700 font-normal mr-1'>By</span>{selectedArticle.author}
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="flex gap-2">
                                     <button
@@ -95,19 +95,21 @@ function SelectedArticle({ selectedArticle, onClose, formatDate, }) {
                                 </div>
 
                                 <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="px-3 py-1 rounded-full text-sm sm:text-[15.5px] md:text-[17px] flex justify-center items-center font-medium bg-green-100 text-green-700">
+                                    <span className="px-3 py-1 rounded-full text-sm sm:text-[15.5px] md:text-[17px] flex justify-center items-center font-semibold bg-green-100 text-green-700">
                                         <svg className="mr-1.5 h-4.5 w-4.5 sm:h-5 sm:w-5 md:h-5.5 md:w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                             <circle cx="12" cy="12" r="10" />
                                             <path d="m9 12 2 2 4-4" />
                                         </svg> Verified Source
                                     </span>
-                                    <span className="px-3 py-1 rounded-full text-sm justify-center items-center font-medium sm:text-[15.5px] md:text-[17px] bg-red-100 text-red-700 flex">
-                                        <svg className="sm:h-5 sm:w-5 md:h-5.5 md:w-5.5 mr-1.5 h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-                                        </svg> Breaking News
-                                    </span>
                                     {selectedArticle.urlToImage && (
-                                        <span className="px-3 py-2 rounded-full flex justify-center items-center text-sm font-bold bg-[#eceef1] sm:text-[15.5px] md:text-[17px] text-gray-600">
+                                        <span className="px-3 py-1 rounded-full text-sm justify-center items-center font-semibold sm:text-[15.5px] md:text-[17px] bg-red-100 text-red-700 flex">
+                                            <svg className="sm:h-5 sm:w-5 md:h-5.5 md:w-5.5 mr-1.5 h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+                                            </svg> Breaking News
+                                        </span>
+                                    )}
+                                    {selectedArticle.urlToImage && (
+                                        <span className="px-3 py-2 rounded-full flex justify-center items-center text-sm font-semibold bg-[#eceef1] sm:text-[15.5px] md:text-[17px] text-gray-600">
                                             <svg className="mr-1.5 h-4.5 w-4.5 sm:h-5 sm:w-5 md:h-5.5 md:w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                                                 <circle cx="8.5" cy="8.5" r="1.2" />
@@ -127,10 +129,10 @@ function SelectedArticle({ selectedArticle, onClose, formatDate, }) {
                                     className="flex-1 px-6 text-[15px] sm:text-[16.5px] md:text-[17.5px] py-3 flex justify-center items-center bg-linear-to-r from-[#00aed1] to-[#00BAE0] text-white rounded-xl font-medium text-center hover:shadow-lg transition-all duration-300"
                                 >
                                     View Original Source <svg className='ml-2.5 h-4.5 w-4.5 sm:w-5 sm:h-5 md:h-5.5 md:w-5.5 mr-1.5' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-  <polyline points="15 3 21 3 21 9"/>
-  <line x1="10" y1="14" x2="21" y2="3"/>
-</svg>
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
                                 </a>
                                 <button
                                     onClick={() => {
@@ -147,13 +149,13 @@ function SelectedArticle({ selectedArticle, onClose, formatDate, }) {
                                     }}
                                     className="px-5.5 py-3 border border-gray-500 flex text-[15px] sm:text-[16.5px] md:text-[17.5px] justify-center items-center font-bold text-gray-600 rounded-xl hover:bg-gray-100 transition-all duration-300"
                                 >
-                                  <svg className='h-4.5 w-4.5 sm:w-5 sm:h-5 md:h-5.5 md:w-5.5 mr-2' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="18" cy="5" r="3"/>
-  <circle cx="6" cy="12" r="3"/>
-  <circle cx="18" cy="19" r="3"/>
-  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-</svg> Share Article
+                                    <svg className='h-4.5 w-4.5 sm:w-5 sm:h-5 md:h-5.5 md:w-5.5 mr-2' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="18" cy="5" r="3" />
+                                        <circle cx="6" cy="12" r="3" />
+                                        <circle cx="18" cy="19" r="3" />
+                                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                    </svg> Share Article
                                 </button>
                             </div>
                         </div>

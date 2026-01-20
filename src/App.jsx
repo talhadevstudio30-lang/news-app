@@ -13,7 +13,7 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('darkMode');
-      if (saved !== null) return saved === 'true';
+      if (saved !== null) return saved === 'true'; 
       // Default: system preference
       return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
@@ -30,28 +30,30 @@ export default function App() {
   }, [darkMode]);
 
   const fetchNews = async () => {
-    setLoading(true);
-    setError(null);
+  setLoading(true);
+  setError(null);
 
-    const url =
-      category === "general" && query.trim()
-        ? `https://newsapi.org/v2/everything?q=${query}&pageSize=30&language=en&sortBy=publishedAt&apiKey=b996d6f51c59466493e61f4240017e2e`
-        : `https://newsapi.org/v2/top-headlines?category=${category}&pageSize=30&language=en&apiKey=b996d6f51c59466493e61f4240017e2e`;
+  const apiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
 
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.status === "ok") {
-        setArticles(data.articles);
-      } else {
-        setError("Something broke 😵‍💫");
-      }
-    } catch {
-      setError("Network error 🚨");
+  const url =
+    category === "general" && query.trim()
+      ? `https://newsapi.org/v2/everything?q=${query}&pageSize=30&language=en&sortBy=publishedAt&apiKey=${apiKey}`
+      : `https://newsapi.org/v2/top-headlines?category=${category}&pageSize=30&language=en&apiKey=${apiKey}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.status === "ok") {
+      setArticles(data.articles);
+    } else {
+      setError("Something broke 😵‍💫");
     }
+  } catch {
+    setError("Network error 🚨");
+  }
 
-    setLoading(false);
-  };
+  setLoading(false);
+};
 
   useEffect(() => {
     fetchNews();
