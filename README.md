@@ -30,6 +30,10 @@ npm run preview
 
 Open http://localhost:5173 (or the port printed in the terminal) to view the app.
 
+## 🔒 Live demo
+
+Live demo: The API used in this app is not for commercial use. It can only run on localhost, which is why a live demo of this app is not available. To share a public demo you can either replace the data source with a production-permitted API, mock the API responses, or include a set of sample data for demonstration purposes.
+
 ---
 
 ## ⭐ Features
