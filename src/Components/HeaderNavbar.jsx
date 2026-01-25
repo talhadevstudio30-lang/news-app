@@ -9,7 +9,7 @@ function HeaderNavbar() {
 
                     {/* Feedback Button with Speech Bubble */}
                     <a
-                        href="mailto:talhadevstudio30@gmail.com?subject=Feedback%20for%20Article%20App&body=Hi%2C%0A%0AI'd%20like%20to%20share%20the%20following%20feedback%3A%0A"
+                        href="mailto:talhadevstudio30@gmail.com?subject=Feedback of News App%20for%20Article%20App&body=Hi%2C%0A%0AI'd%20like%20to%20share%20the%20following%20feedback%3A%0A"
                         aria-label="Send feedback email"
                     >
                         <button className="flex items-center gap-2 px-2 sm:px-2 py-2 rounded-full bg-linear-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 border border-blue-200 hover:border-blue-400 transform transition-all duration-200 hover:scale-105 active:scale-95 group shadow-sm hover:shadow-md">

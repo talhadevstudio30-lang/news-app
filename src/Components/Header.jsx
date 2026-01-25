@@ -1,5 +1,6 @@
 import React from 'react';
 import HeaderNavbar from './HeaderNavbar';
+import LatestUpdateInfo from './LatestUpdateInfo';
 
 // SVG Icons as separate components
 const GeneralIcon = () => (
@@ -74,7 +75,7 @@ const PoliticsIcon = () => (
     </svg>
 );
 
-function Header({ setQuery, setCategory, category, query, Search_Btn }) {
+function Header({ setQuery, handleSearch, category_name, setCategory, setcategory_name, category, query, Search_Btn }) {
 
     // Function to get categories data
     const getCategories = () => {
@@ -120,7 +121,7 @@ function Header({ setQuery, setCategory, category, query, Search_Btn }) {
                 focus: "focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:shadow-lg focus:shadow-red-200 focus:outline-none"
             },
             {
-                id: "science",
+                id: "Science",
                 label: "Science",
                 bg: "bg-purple-100 active:bg-purple-200 border border-purple-200 hover:border-purple-300",
                 text: "text-purple-700",
@@ -146,15 +147,9 @@ function Header({ setQuery, setCategory, category, query, Search_Btn }) {
         ];
     };
 
-    // Function to handle search
-    const handleSearch = (e) => {
-        if (e.key === 'Enter' || e.type === 'click') {
-            Search_Btn();
-        }
-    };
-
     // Get categories data
     const categories = getCategories();
+
 
     return (
         <>
@@ -220,8 +215,15 @@ function Header({ setQuery, setCategory, category, query, Search_Btn }) {
                         {categories.map((item) => (
                             <button
                                 key={item.id}
-                                onClick={() => setCategory(item.id)}
-                                className={`flex items-center gap-2 px-3 sm:px-4 sm:text-md lg:text-[17px] sm:py-3 py-2 rounded-full text-sm font-medium transition-all duration-200 transform hover:scale-105 active:scale-95 whitespace-nowrap shrink-0 focus:scale-105 focus:z-10 ${item.bg} ${item.text} ${item.focus} ${category === item.id ? 'ring-2 ring-offset-2' : ''}`}
+                                onClick={() => {
+                                    // Clear active search so we show category headlines
+                                    if (setQuery) setQuery("");
+                                    // Normalize category id to lowercase so it matches
+                                    // the API expected category names (e.g. "general").
+                                    setCategory(item.id.toLowerCase());
+                                    if (setcategory_name) setcategory_name(item.label);
+                                }}
+                                className={`flex items-center gap-2 px-3 sm:px-3 sm:text-md lg:text-[17px] sm:py-2 py-2 rounded-full text-[12px] font-medium transition-all duration-200 transform hover:scale-105 active:scale-95 whitespace-nowrap shrink-0 focus:scale-105 focus:z-10 ${item.bg} ${item.text} ${item.focus} ${category === item.id.toLowerCase() ? 'ring-2 ring-offset-2' : ''}`}
                             >
                                 <span className="text-sm">{item.icon}</span>
                                 {item.label}
@@ -230,6 +232,9 @@ function Header({ setQuery, setCategory, category, query, Search_Btn }) {
                     </div>
                 </div>
             </header>
+            <div>
+                <LatestUpdateInfo categories={categories} category_name={category_name}/>
+            </div>
         </>
     )
 }
