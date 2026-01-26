@@ -65,6 +65,7 @@ Important files inside `src/`:
 - `Components/` — important UI pieces:
 	- `Header.jsx` — top header
 	- `HeaderNavbar.jsx` — navigation bar
+	- `Articles.jsx` — article list / cards (renders the list of article previews; typically lives at `src/Components/Articles.jsx` and triggers selection callbacks to show details)
 	- `Footer.jsx` — footer
 	- `LatestUpdateInfo.jsx` — small info widget
 	- `SelectedArticle.jsx` — detailed article view when an article is selected

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Header from "./Components/Header";
 import SelectedArticle from "./Components/SelectedArticle";
 import Footer from "./Components/Footer";
+import Articles from "./Components/Articles";
 
 
 export default function App() {
@@ -58,7 +59,7 @@ export default function App() {
   }
 
   // Close modal function
-  const closeModal = () => { 
+  const closeModal = () => {
     setSelectedArticle(null);
   };
 
@@ -76,14 +77,14 @@ export default function App() {
     });
   };
 
-  
-    // Function to handle search
-    const handleSearch = (e) => {
-        if (e.key === 'Enter' || e.type === 'click') {
-          Search_Btn();
-          setcategory_name(query);
-        }
-    };
+
+  // Function to handle search
+  const handleSearch = (e) => {
+    if (e.key === 'Enter' || e.type === 'click') {
+      Search_Btn();
+      setcategory_name(query);
+    }
+  };
 
 
   return (
@@ -167,205 +168,113 @@ export default function App() {
           )}
 
           {/* Grid */}
-          <div className="flex flex-col w-full md:flex-row flex-wrap justify-center items-stretch gap-6">
-            {articles.slice(0, visibleCount).map((item, index) => {
+          <div>
+            <Articles articles={articles} visibleCount={visibleCount} setSelectedArticle={setSelectedArticle}/>
+          </div>
 
 
-              return (
-                <div
-                  key={index}
-                  className="w-full md:w-[calc(50%-12px)] lg:w-[calc(30.333%-16px)]  2xl:w-[calc(25.333%-16px)] min-h-100 flex flex-col rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                >
-                  {/* Image Section */}
-                  <div className="relative h-58 shrink-0">
-                    {item.urlToImage ? (
-                      <>
-                        <img
-                          src={item.urlToImage}
-                          alt={item.title || "News image"}
-                          className="h-full w-full object-cover"
-                        />
-                        <div className="image-fallback absolute inset-0 hidden bg-gray-100 rounded-lg flex-col items-center justify-center text-gray-400">
-                          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                            <circle cx="8.5" cy="8.5" r="1.5" />
-                            <polyline points="21 15 16 10 5 21" />
-                            <line x1="3" y1="3" x2="21" y2="21" />
-                          </svg>
-                          <span className="mt-2 text-sm font-medium">Image Not Available</span>
-                        </div>
-                      </>
-
-                    ) : (
-                      <div className="w-full h-full bg-gray-100 flex flex-col items-center justify-center text-gray-400">
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                          <circle cx="8.5" cy="8.5" r="1.5" />
-                          <polyline points="21 15 16 10 5 21" />
-                          <line x1="3" y1="3" x2="21" y2="21" />
-                        </svg>
-                        <span className="mt-2 text-sm font-medium">Image Not Available</span>
-                      </div>
-                    )}
-
-                    {/* Source */}
-                    <span className="absolute bottom-0 left-0 text-xs text-gray-200 tracking-wide bg-[#01010183] px-3 py-1 rounded-tr-2xl">
-                      {item.source?.name || "Unknown Source"}
-                    </span>
-                  </div>
-
-                  {/* Content - Flex grow to fill remaining space */}
-                  <div className="p-5 flex-1 flex flex-col">
-                    <h2
-                      className="text-lg md:text-[21px] cursor-pointer font-bold text-gray-900 leading-snug mb-3 line-clamp-2 hover:text-blue-600 transition-colors"
-                      onClick={() => setSelectedArticle(item)}
-                    >
-                      {item.title || "No Title Available"}
-                    </h2>
-
-                    <p className="text-sm md:text-[16px] text-gray-500 mb-4 flex-1 line-clamp-3">
-                      {item.description?.split(" ").slice(0, 25).join(" ") ||
-                        "No description available for this article."}
-                      {item.description?.split(" ").length > 25 ? "..." : ""}
-                    </p>
-
-                    {/* Footer - Fixed at bottom of card content */}
-                    <div className="flex items-center justify-between text-sm md:text-[16px] pt-3 border-t border-gray-200">
-                      <span className="text-gray-500 flex items-center gap-1">
-                        <svg className="h-5 w-5 md:h-5.5 md:w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                          <line x1="16" y1="2" x2="16" y2="6" />
-                          <line x1="8" y1="2" x2="8" y2="6" />
-                          <line x1="3" y1="10" x2="21" y2="10" />
-                        </svg>
-                        {item.publishedAt ?
-                          new Date(item.publishedAt).toLocaleString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric'
-                          }) :
-                          "Date Unknown"
-                        }
-                      </span>
-
-                      <button
-                        className="text-blue-600 md:text-[15.5px] font-semibold hover:underline flex items-center gap-1 transition-colors cursor-pointer duration-200"
-                        onClick={() => setSelectedArticle(item)}
-                      >
-                        Read Full Story
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </button>
+          {!loading && articles.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-16 px-4">
+              <div className="relative mb-8">
+                <div className="w-38 md:w-44 md:h-44 h-38   bg-linear-to-br from-gray-50 to-gray-100 rounded-full flex items-center justify-center shadow-inner">
+                  {/* Animated search icon */}
+                  <div className="relative">
+                    <svg className="w-14 md:w-20 md:h-20 h-14 text-gray-300 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 border-2 border-gray-200 rounded-full animate-ping opacity-20"></div>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
 
-        {!loading && articles.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-16 px-4">
-            <div className="relative mb-8">
-              <div className="w-38 md:w-44 md:h-44 h-38   bg-linear-to-br from-gray-50 to-gray-100 rounded-full flex items-center justify-center shadow-inner">
-                {/* Animated search icon */}
-                <div className="relative">
-                  <svg className="w-14 md:w-20 md:h-20 h-14 text-gray-300 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                {/* Floating emoji */}
+                <div className="absolute -top-2 -right-2 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                  <svg
+                    className="text-3xl text-blue-400"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    {/* Face circle */}
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+
+                    {/* Eyes - dots for simple expression */}
+                    <circle cx="8.5" cy="10" r="1" fill="currentColor" />
+                    <circle cx="15.5" cy="10" r="1" fill="currentColor" />
+
+                    {/* Neutral to slightly sad mouth - minimal curve */}
+                    <path d="M9 15C10.5 16 13.5 16 15 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 border-2 border-gray-200 rounded-full animate-ping opacity-20"></div>
-                  </div>
                 </div>
               </div>
 
-              {/* Floating emoji */}
-              <div className="absolute -top-2 -right-2 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg animate-bounce">
-                <svg
-                  className="text-3xl text-blue-400"
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  {/* Face circle */}
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+              <h3 className="text-2xl font-semibold text-blue-500 mb-2">No News Found</h3>
+              <p className="text-gray-500 mb-8 text-center max-w-md">We couldn't find any news matching your search criteria.</p>
 
-                  {/* Eyes - dots for simple expression */}
-                  <circle cx="8.5" cy="10" r="1" fill="currentColor" />
-                  <circle cx="15.5" cy="10" r="1" fill="currentColor" />
-
-                  {/* Neutral to slightly sad mouth - minimal curve */}
-                  <path d="M9 15C10.5 16 13.5 16 15 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
             </div>
+          )}
 
-            <h3 className="text-2xl font-semibold text-blue-500 mb-2">No News Found</h3>
-            <p className="text-gray-500 mb-8 text-center max-w-md">We couldn't find any news matching your search criteria.</p>
-
-          </div>
-        )}
-
-        {!loading && articles.length > 6 && (
-          <div className="flex justify-center mt-12 gap-3">
-            {visibleCount < articles.length && (
-              <button
-                onClick={() => setVisibleCount((prev) => prev + 6)}
-                className="group flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-2xl border border-blue-100 hover:bg-blue-50 hover:border-blue-200 transition-all duration-200 shadow-sm hover:shadow focus:outline-none focus:ring-1 focus:ring-blue-300"
-              >
-                <span className="font-medium">Load More</span>
-                <svg
-                  className="w-4 h-4 group-hover:translate-y-0.5 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+          {!loading && articles.length > 6 && (
+            <div className="flex justify-center mt-12 gap-3">
+              {visibleCount < articles.length && (
+                <button
+                  onClick={() => setVisibleCount((prev) => prev + 6)}
+                  className="group flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-2xl border border-blue-100 hover:bg-blue-50 hover:border-blue-200 transition-all duration-200 shadow-sm hover:shadow focus:outline-none focus:ring-1 focus:ring-blue-300"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.5"
-                    d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-            )}
+                  <span className="font-medium">Load More</span>
+                  <svg
+                    className="w-4 h-4 group-hover:translate-y-0.5 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
+                      d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+              )}
 
-            {visibleCount > 6 && (
-              <button
-                onClick={() => setVisibleCount((prev) => prev - 6)}
-                className="group flex items-center gap-2 rounded-2xl px-6 py-3 bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100 hover:text-blue-800 transition-all duration-200 shadow-sm hover:shadow focus:outline-none focus:ring-1 focus:ring-blue-300"
-              >
-                <svg
-                  className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {visibleCount > 6 && (
+                <button
+                  onClick={() => setVisibleCount((prev) => prev - 6)}
+                  className="group flex items-center gap-2 rounded-2xl px-6 py-3 bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100 hover:text-blue-800 transition-all duration-200 shadow-sm hover:shadow focus:outline-none focus:ring-1 focus:ring-blue-300"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.5"
-                    d="M5 11l7-7 7 7M5 19l7-7 7 7"
-                  />
-                </svg>
-                <span className="font-medium">Show Less</span>
-              </button>
-            )}
+                  <svg
+                    className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
+                      d="M5 11l7-7 7 7M5 19l7-7 7 7"
+                    />
+                  </svg>
+                  <span className="font-medium">Show Less</span>
+                </button>
+              )}
+            </div>
+          )}
+          <div className="mt-10 pb-5">
+            <Footer />
           </div>
-        )}
-        <div className="mt-10 pb-5">
-          <Footer />
+          <SelectedArticle
+            selectedArticle={selectedArticle}
+            onClose={closeModal}
+            formatDate={formatDate}
+          />
         </div>
-        <SelectedArticle
-          selectedArticle={selectedArticle}
-          onClose={closeModal}
-          formatDate={formatDate}
-        />
-      </div >
+      </div>
     </>
-  );
+  )
 }
